@@ -1,32 +1,74 @@
 {
-  "name": "Pulse - Push Notifications",
-  "short_name": "Pulse",
-  "description": "Pulse mobile app with push notifications for iOS",
+  "name": "Pulse - Daily Quest PWA",
+  "short_name": "Pulse Quest",
+  "description": "Progressive Web App for daily quest completion with push notifications",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#191a1a",
+  "theme_color": "#8fff70",
   "orientation": "portrait-primary",
   "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "lifestyle", "social"],
   "icons": [
     {
-      "src": "/vite.svg",
+      "src": "/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/vite.svg",
+      "src": "/icon.svg",
       "sizes": "192x192",
       "type": "image/svg+xml"
     },
     {
-      "src": "/vite.svg",
+      "src": "/icon.svg",
       "sizes": "512x512",
       "type": "image/svg+xml"
     }
   ],
-  "categories": ["productivity", "utilities"],
-  "lang": "en-US",
-  "dir": "ltr"
+  "shortcuts": [
+    {
+      "name": "Complete Quest",
+      "short_name": "Quest",
+      "description": "Complete your daily quest",
+      "url": "/quest",
+      "icons": [
+        {
+          "src": "/icon.svg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "View Progress",
+      "short_name": "Progress",
+      "description": "View your quest progress",
+      "url": "/progress",
+      "icons": [
+        {
+          "src": "/icon.svg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Daily Quest Dashboard"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Quest Interface"
+    }
+  ]
 }

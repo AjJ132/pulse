@@ -1,211 +1,399 @@
-# Pulse Mobile PWA
+# Pulse - Daily Quest PWA
 
-A Progressive Web App (PWA) built with Vite and deployed to AWS using S3 and CloudFront.
+A Progressive Web Application for daily quest completion with push notifications. Built with Next.js, TypeScript, and the Web Push API.
 
 ## Features
 
-- Progressive Web App (PWA) with service worker
-- Responsive design for mobile devices
-- Deployed on AWS S3 with CloudFront CDN
-- Automated deployment with Terraform
+- 🎯 **Daily Quest Management**: Track and complete daily habits
+- 🔔 **Push Notifications**: Real-time notifications for quest completions and approvals
+- 📱 **Progressive Web App**: Install on any device with full offline support
+- 👥 **Social Features**: Share progress and get notified about friend activities
+- 🔒 **Secure**: Uses VAPID authentication for web push
+- 🎨 **Modern UI**: Beautiful, responsive interface with Tailwind CSS
 
-## Prerequisites
+## Architecture
 
-Before deploying, make sure you have the following installed:
+This application implements a comprehensive PWA push notification system with the following components:
 
-1. **Node.js** (v16 or higher)
-2. **AWS CLI** - [Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-3. **Terraform** - [Installation Guide](https://developer.hashicorp.com/terraform/downloads)
-4. **AWS Credentials** configured
+### Core Components
 
-### AWS Credentials Setup
+1. **Client-Side Service Worker** (`/public/worker/index.js`)
+2. **Notification Management Component** (`/components/notification.tsx`)
+3. **Server-Side Push Service** (`/actions/notification.ts`)
+4. **API Routes** (`/app/api/push/*`)
+5. **PWA Configuration** (`next-pwa` plugin)
 
-Configure your AWS credentials using one of these methods:
+### Technology Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS
+- **PWA**: next-pwa with Workbox
+- **Push Notifications**: Web Push API with VAPID
+- **Server**: Next.js API Routes
+- **Build Tool**: Next.js built-in bundler
+
+## Quick Start
+
+### 1. Clone and Install
 
 ```bash
-# Method 1: AWS CLI configure
-aws configure
-
-# Method 2: Environment variables
-export AWS_ACCESS_KEY_ID="your-access-key"
-export AWS_SECRET_ACCESS_KEY="your-secret-key"
-export AWS_DEFAULT_REGION="us-east-1"
-```
-
-## Development
-
-### Install Dependencies
-
-```bash
+cd pulse-mobile
 npm install
 ```
 
-### Commit Conventions
+### 2. Environment Setup
 
-This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+Copy the example environment file and configure your VAPID keys:
 
-#### Quick Commit
 ```bash
-npm run commit <type> "<message>"
+cp env.example .env.local
 ```
 
-#### Manual Commit
+Generate VAPID keys:
+
 ```bash
-git commit
-# This will open the commit template with conventional format
+npx web-push generate-vapid-keys
 ```
 
-#### Commit Types
-- `feat` - A new feature
-- `fix` - A bug fix  
-- `chore` - Maintenance tasks, dependencies, etc.
-- `docs` - Documentation changes
-- `style` - Code style changes (formatting, etc.)
-- `refactor` - Code refactoring
-- `test` - Adding or updating tests
-- `perf` - Performance improvements
+Update `.env.local` with your generated keys:
 
-#### Examples
 ```bash
-npm run commit feat "add user authentication"
-npm run commit fix "resolve mobile layout issues"
-npm run commit chore "update dependencies"
-npm run commit docs "update README with deployment instructions"
+NEXT_PUBLIC_VAPID_KEY=your_public_key_here
+VAPID_PRIVATE_KEY=your_private_key_here
+VAPID_EMAIL=your-email@example.com
 ```
 
-### Start Development Server
+### 3. Development
 
 ```bash
 npm run dev
 ```
 
-### Build for Production
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-npm run build
+### 4. PWA Installation
+
+#### iOS Safari
+1. Open the app in Safari
+2. Tap the Share button (⬆️)
+3. Select "Add to Home Screen"
+4. Tap "Add" to install
+5. Open from your home screen
+
+#### Android Chrome
+1. Open the app in Chrome
+2. Tap the menu (⋮)
+3. Select "Add to Home screen"
+4. Tap "Add" to install
+5. Open from your home screen
+
+## Push Notification Setup
+
+### 1. VAPID Configuration
+
+VAPID (Voluntary Application Server Identification) keys are required for web push notifications:
+
+```typescript
+// Server-side configuration
+const vapidKeys = {
+  publicKey: process.env.NEXT_PUBLIC_VAPID_KEY!,
+  privateKey: process.env.VAPID_PRIVATE_KEY!,
+};
+
+webpush.setVapidDetails(
+  'mailto:your-email@example.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
 ```
 
-## Deployment
+### 2. Client-Side Subscription
 
-### Quick Deploy
-
-To deploy the entire application (infrastructure + code):
-
-```bash
-npm run apply
+```typescript
+// Subscribe to push notifications
+const subscription = await registration.pushManager.subscribe({
+  userVisibleOnly: true,
+  applicationServerKey: urlB64ToUint8Array(vapidPublicKey)
+});
 ```
 
-This command will:
-1. Initialize Terraform (if needed)
-2. Deploy AWS infrastructure (S3 bucket + CloudFront distribution)
-3. Build the PWA
-4. Upload files to S3
-5. Invalidate CloudFront cache
-6. Provide you with the deployment URL
+### 3. Server-Side Sending
 
-### Manual Deployment Steps
-
-If you prefer to deploy manually:
-
-1. **Deploy Infrastructure:**
-   ```bash
-   cd terraform
-   terraform init
-   terraform plan
-   terraform apply
-   ```
-
-2. **Build and Deploy Application:**
-   ```bash
-   npm run build
-   aws s3 sync dist/ s3://your-bucket-name --delete
-   aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
-   ```
-
-## Infrastructure
-
-The Terraform configuration creates:
-
-- **S3 Bucket**: Hosts the static files with public read access
-- **CloudFront Distribution**: CDN for global content delivery
-- **Origin Access Control**: Secure access between CloudFront and S3
-- **Bucket Policy**: Allows public read access for web hosting
-
-### Configuration
-
-Edit `terraform/terraform.tfvars` to customize:
-
-- AWS region
-- Environment name
-- S3 bucket name
-- Custom domain (optional)
-
-## Testing on Mobile
-
-After deployment, you can test the PWA on your phone by:
-
-1. Opening the CloudFront URL in your mobile browser
-2. Adding the app to your home screen (iOS: Share → Add to Home Screen, Android: Add to Home Screen)
-3. The app will work offline thanks to the service worker
-
-## Project Structure
-
+```typescript
+// Send notification to user
+await webpush.sendNotification(
+  userSubscription,
+  JSON.stringify({
+    message: "Quest completed!",
+    body: "John just completed their daily exercise quest",
+    icon: "/icon.svg"
+  })
+);
 ```
-pulse-mobile/
-├── src/                    # Source code
-├── public/                 # Static assets
-├── terraform/              # Infrastructure as Code
-│   ├── main.tf            # Main Terraform configuration
-│   ├── variables.tf       # Variable definitions
-│   └── terraform.tfvars   # Variable values
-├── scripts/               # Deployment scripts
-│   └── deploy.sh         # Main deployment script
-├── dist/                  # Build output (generated)
-└── package.json          # Project configuration
+
+## API Routes
+
+### Subscribe to Notifications
 ```
+POST /api/push/subscribe
+Content-Type: application/json
+
+{
+  "user_id": "user_123",
+  "subscription": {
+    "endpoint": "https://...",
+    "keys": {
+      "p256dh": "...",
+      "auth": "..."
+    }
+  }
+}
+```
+
+### Unsubscribe from Notifications
+```
+DELETE /api/push/unsubscribe
+Content-Type: application/json
+
+{
+  "user_id": "user_123"
+}
+```
+
+### Send Test Notification
+```
+POST /api/push/test
+Content-Type: application/json
+
+{
+  "user_id": "user_123",
+  "message": "Test notification message",
+  "title": "Test Title"
+}
+```
+
+## Server Actions
+
+Use server actions for sending notifications from your application:
+
+```typescript
+import { sendNotification, sendQuestCompletionNotification } from '@/actions/notification';
+
+// Send custom notification
+await sendNotification(
+  "Quest completed!",
+  "reviewer_user_id",
+  "/icon.svg",
+  "Quest Alert"
+);
+
+// Send quest completion notification
+await sendQuestCompletionNotification(
+  "completer_user_id",
+  "reviewer_user_id", 
+  "Daily Exercise",
+  "John Doe"
+);
+```
+
+## Component Usage
+
+### Notification Component
+
+```tsx
+import NotificationComponent from '@/components/notification';
+
+export default function App() {
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  return (
+    <NotificationComponent 
+      vapidPublicKey={process.env.NEXT_PUBLIC_VAPID_KEY}
+      onSubscriptionChange={setIsSubscribed}
+    />
+  );
+}
+```
+
+## Service Worker
+
+The service worker handles push events and notification clicks:
+
+```javascript
+// Handle push notifications
+self.addEventListener("push", async (event) => {
+  const data = JSON.parse(event.data.text());
+  event.waitUntil(
+    self.registration.showNotification(data.message, {
+      body: data.body,
+      icon: data.icon,
+      // ... other options
+    })
+  );
+});
+
+// Handle notification clicks
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow("/")
+  );
+});
+```
+
+## Utility Functions
+
+### VAPID Key Conversion
+```typescript
+import { urlB64ToUint8Array } from '@/lib/utils';
+
+const applicationServerKey = urlB64ToUint8Array(vapidPublicKey);
+```
+
+### Permission Management
+```typescript
+import { 
+  requestNotificationPermission,
+  getNotificationPermission,
+  isPushNotificationSupported 
+} from '@/lib/utils';
+
+if (isPushNotificationSupported()) {
+  const permission = await requestNotificationPermission();
+}
+```
+
+## Browser Support
+
+| Browser | Support | Notes |
+|---------|---------|-------|
+| Chrome 42+ | ✅ Full | Complete support |
+| Firefox 44+ | ✅ Full | Complete support |
+| Safari 16+ | ⚠️ Limited | iOS 16.4+ PWA only |
+| Edge 17+ | ✅ Full | Complete support |
+
+## Security Considerations
+
+1. **VAPID Keys**: Keep private keys secure and never expose them client-side
+2. **User Consent**: Always request explicit permission before subscribing
+3. **Data Privacy**: Don't send sensitive data in push payloads
+4. **Subscription Management**: Provide clear opt-out mechanisms
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **AWS Credentials Not Found**
-   - Ensure AWS CLI is configured: `aws configure`
-   - Check environment variables are set correctly
+1. **Notifications not appearing**
+   - Check browser notification permissions
+   - Verify service worker registration
+   - Validate VAPID key configuration
 
-2. **Terraform State Lock**
-   - If deployment fails due to state lock, wait a few minutes and retry
-   - Or force unlock: `terraform force-unlock LOCK_ID`
+2. **Service worker registration failures**
+   - Ensure HTTPS connection (required for service workers)
+   - Check for JavaScript errors in browser console
 
-3. **S3 Bucket Name Already Exists**
-   - Update the bucket name in `terraform/terraform.tfvars`
-   - S3 bucket names must be globally unique
+3. **Push subscription errors**
+   - Validate VAPID key format
+   - Check browser support for Push API
 
-4. **CloudFront Cache Issues**
-   - The deployment script automatically invalidates the cache
-   - Manual invalidation: `aws cloudfront create-invalidation --distribution-id ID --paths "/*"`
+### Debug Mode
 
-### Logs and Debugging
+Enable debug logging in development:
 
-- Check Terraform logs: `terraform logs`
-- Check AWS CloudTrail for API calls
-- Monitor CloudFront metrics in AWS Console
+```typescript
+import { debugLog } from '@/lib/utils';
 
-## Security
+debugLog('Subscription created', subscription);
+```
 
-- S3 bucket has public read access for web hosting
-- CloudFront provides HTTPS by default
-- Origin Access Control secures S3-CloudFront communication
-- All resources are tagged for cost tracking and management
+## Production Deployment
 
-## Cost Optimization
+### 1. Environment Variables
 
-- CloudFront Price Class 100 (US, Canada, Europe)
-- S3 Standard storage class
-- Consider enabling S3 lifecycle policies for cost optimization
+Set up production environment variables:
+
+```bash
+NEXT_PUBLIC_VAPID_KEY=your_production_public_key
+VAPID_PRIVATE_KEY=your_production_private_key
+VAPID_EMAIL=your-production-email@example.com
+```
+
+### 2. Database Integration
+
+Replace in-memory storage with a proper database:
+
+```typescript
+// Replace Map storage with database operations
+const subscriptions = new Map(); // Remove this
+
+// Use your preferred database (PostgreSQL, MongoDB, etc.)
+import { db } from './db';
+
+// Store subscription
+await db.subscription.create({
+  data: {
+    userId,
+    subscription: JSON.stringify(subscription),
+  }
+});
+```
+
+### 3. HTTPS Requirement
+
+Ensure your production deployment uses HTTPS as it's required for:
+- Service Workers
+- Push API
+- Geolocation
+- Other PWA features
+
+## Integration with Backend Services
+
+### AWS Lambda Integration
+
+The original Pulse system uses AWS Lambda functions. You can integrate this Next.js PWA with your existing backend:
+
+```typescript
+// Call existing AWS Lambda functions
+const response = await fetch('https://your-api-gateway-url/notifications', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(notificationData)
+});
+```
+
+### Database Schema Example
+
+```sql
+CREATE TABLE subscriptions (
+  id SERIAL PRIMARY KEY,
+  user_id VARCHAR(255) NOT NULL UNIQUE,
+  subscription_json TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_subscriptions_user_id ON subscriptions(user_id);
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
-For issues or questions:
-1. Check the troubleshooting section above
-2. Review AWS documentation for S3 and CloudFront
-3. Check Terraform documentation for infrastructure issues 
+For support and questions:
+- Create an issue in the GitHub repository
+- Check the troubleshooting section above
+- Review browser console for error messages
+
+---
+
+Built with ❤️ using Next.js and the Web Push API
