@@ -3,10 +3,14 @@
  * Communicates with the deployed AWS Lambda functions via API Gateway
  */
 
-const AWS_API_URL = process.env.NEXT_PUBLIC_AWS_API_URL!;
+const AWS_API_URL = process.env.NEXT_PUBLIC_AWS_API_URL;
 
-if (!AWS_API_URL) {
-  throw new Error('NEXT_PUBLIC_AWS_API_URL environment variable is not set');
+// Only throw error at runtime, not during build
+function getApiUrl(): string {
+  if (!AWS_API_URL) {
+    throw new Error('NEXT_PUBLIC_AWS_API_URL environment variable is not set');
+  }
+  return AWS_API_URL;
 }
 
 export interface PushSubscriptionData {
@@ -52,7 +56,7 @@ export interface ApiResponse<T = unknown> {
  */
 export async function getVapidPublicKey(): Promise<string> {
   try {
-    const response = await fetch(`${AWS_API_URL}/vapid`, {
+    const response = await fetch(`${getApiUrl()}/vapid`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +83,7 @@ export async function subscribeToNotifications(
   subscription: PushSubscriptionData
 ): Promise<ApiResponse<SubscriptionResponse>> {
   try {
-    const response = await fetch(`${AWS_API_URL}/subscriptions`, {
+    const response = await fetch(`${getApiUrl()}/subscriptions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -115,7 +119,7 @@ export async function subscribeToNotifications(
  */
 export async function unsubscribeFromNotifications(userId: string): Promise<ApiResponse> {
   try {
-    const response = await fetch(`${AWS_API_URL}/subscriptions`, {
+    const response = await fetch(`${getApiUrl()}/subscriptions`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -156,7 +160,7 @@ export async function sendTestNotification(
   url?: string
 ): Promise<ApiResponse> {
   try {
-    const response = await fetch(`${AWS_API_URL}/notifications`, {
+    const response = await fetch(`${getApiUrl()}/notifications`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -229,7 +233,7 @@ export async function sendQuestApprovalNotification(
  */
 export async function checkApiHealth(): Promise<boolean> {
   try {
-    const response = await fetch(`${AWS_API_URL}/vapid`, {
+    const response = await fetch(`${getApiUrl()}/vapid`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
