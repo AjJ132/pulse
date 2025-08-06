@@ -6,12 +6,7 @@ applications:
         preBuild:
           commands:
             - nvm use 20
-            - node --version
-            - npm --version
-            - ls -la
-            - cat package.json
-            - npm cache clean --force
-            - npm ci --verbose
+            - npm install --production=false
         build:
           commands:
             - npm run build
