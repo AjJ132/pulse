@@ -1,0 +1,12 @@
+{
+  "name": "subscription-manager",
+  "version": "1.0.0",
+  "description": "Lambda function for managing push notification subscriptions",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.1450.0"
+  },
+  "scripts": {
+    "zip": "zip -r ../subscription_manager.zip ."
+  }
+} 

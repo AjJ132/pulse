@@ -1,0 +1,22 @@
+{
+  "name": "pulse",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Pulse Mobile PWA",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "pwa:dev": "vite --mode pwa",
+    "pwa:build": "vite build --mode pwa",
+    "apply": "./scripts/deploy.sh",
+    "commit": "./scripts/commit.sh",
+    "setup-sns": "./scripts/setup-sns-platform.sh"
+  },
+  "devDependencies": {
+    "vite": "^7.0.4",
+    "vite-plugin-pwa": "^1.0.2",
+    "web-push": "^3.6.7"
+  }
+}
