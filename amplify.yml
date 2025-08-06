@@ -11,7 +11,7 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: .next
+        baseDirectory: pulse-mobile/out
         files:
           - '**/*'
       cache:

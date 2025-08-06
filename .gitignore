@@ -53,6 +53,8 @@ jspm_packages/
 dist/
 build/
 coverage/
+out/
+.next/
 
 # Lambda deployment packages
 lambda_functions/*.zip
