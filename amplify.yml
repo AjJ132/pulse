@@ -5,7 +5,13 @@ applications:
       phases:
         preBuild:
           commands:
-            - npm ci
+            - nvm use 20
+            - node --version
+            - npm --version
+            - ls -la
+            - cat package.json
+            - npm cache clean --force
+            - npm ci --verbose
         build:
           commands:
             - npm run build
