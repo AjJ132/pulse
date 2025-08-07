@@ -27,7 +27,7 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-gray-800">Pulse</h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Daily Quest PWA with push notifications. Complete your daily habits and get real-time updates!
+            Test message here
           </p>
         </header>
 
