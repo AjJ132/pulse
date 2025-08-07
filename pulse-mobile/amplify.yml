@@ -7,6 +7,8 @@ frontend:
     build:
       commands:
         - npm run build
+  environment:
+    NEXT_PUBLIC_AWS_API_URL: https://p2kgt1b98i.execute-api.us-east-1.amazonaws.com/dev
   artifacts:
     baseDirectory: out
     files:
@@ -22,6 +24,7 @@ frontend:
           value: 'public, max-age=0, must-revalidate'
         - key: 'Service-Worker-Allowed'
           value: '/'
+
     - pattern: '/manifest.json'
       headers:
         - key: 'Content-Type'

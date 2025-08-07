@@ -1,8 +1,11 @@
-const AWS = require('aws-sdk');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, QueryCommand, ScanCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
+const { SSMClient, GetParametersCommand } = require('@aws-sdk/client-ssm');
 const webpush = require('web-push');
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const ssm = new AWS.SSM();
+const dynamoClient = new DynamoDBClient({});
+const dynamodb = DynamoDBDocumentClient.from(dynamoClient);
+const ssm = new SSMClient({});
 
 /**
  * Web Push Sender Lambda Function
@@ -93,7 +96,7 @@ exports.handler = async (event) => {
  */
 async function handleNotificationSend(body, corsHeaders) {
   try {
-    const { title, message, data, user_id } = body;
+    const { title, message, data, user_id, icon, url } = body;
     
     // Validate required fields
     if (!message) {
@@ -145,12 +148,12 @@ async function handleNotificationSend(body, corsHeaders) {
     const notificationPayload = {
       title: title || 'Pulse Notification',
       body: message,
-      icon: '/pwa-192x192.png',
-      badge: '/pwa-192x192.png',
+      icon: icon || '/icon.svg',
+      badge: icon || '/icon.svg',
       data: {
         ...data,
         timestamp: new Date().toISOString(),
-        click_action: '/'
+        click_action: url || '/'
       }
     };
 
@@ -226,10 +229,11 @@ async function getVapidConfiguration() {
 
     console.log('🔑 Fetching VAPID parameters:', paramNames);
 
-    const result = await ssm.getParameters({
+    const command = new GetParametersCommand({
       Names: paramNames,
       WithDecryption: true
-    }).promise();
+    });
+    const result = await ssm.send(command);
 
     if (result.Parameters.length !== 3) {
       throw new Error(`Expected 3 VAPID parameters, got ${result.Parameters.length}`);
@@ -283,7 +287,8 @@ async function getActiveSubscriptions(targetUserId = null) {
         }
       };
       
-      const result = await dynamodb.query(params).promise();
+      const command = new QueryCommand(params);
+      const result = await dynamodb.send(command);
       return result.Items || [];
       
     } else {
@@ -300,7 +305,8 @@ async function getActiveSubscriptions(targetUserId = null) {
         }
       };
       
-      const result = await dynamodb.scan(params).promise();
+      const command = new ScanCommand(params);
+      const result = await dynamodb.send(command);
       return result.Items || [];
     }
 
@@ -384,7 +390,8 @@ async function updateLastNotificationSent(userId, subscriptionId) {
       }
     };
 
-    await dynamodb.update(params).promise();
+    const command = new UpdateCommand(params);
+    await dynamodb.send(command);
     
   } catch (error) {
     console.error(`⚠️ Failed to update last notification timestamp for ${userId}:`, error);
@@ -411,7 +418,8 @@ async function updateFailureCounts(failedSubscriptions) {
         }
       };
 
-      await dynamodb.update(params).promise();
+      const command = new UpdateCommand(params);
+    await dynamodb.send(command);
       console.log(`📈 Updated failure count for ${failed.user_id}`);
 
       // If failure count is too high, deactivate the subscription
@@ -451,7 +459,8 @@ async function deactivateSubscription(userId, subscriptionId) {
       }
     };
 
-    await dynamodb.update(params).promise();
+    const command = new UpdateCommand(params);
+    await dynamodb.send(command);
     console.log(`🔄 Deactivated subscription for ${userId}`);
 
   } catch (error) {

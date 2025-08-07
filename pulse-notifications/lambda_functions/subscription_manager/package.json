@@ -4,7 +4,9 @@
   "description": "Lambda function for managing push notification subscriptions",
   "main": "index.js",
   "dependencies": {
-    "aws-sdk": "^2.1450.0"
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "@aws-sdk/client-ssm": "^3.0.0"
   },
   "scripts": {
     "zip": "zip -r ../subscription_manager.zip ."

@@ -1,6 +1,10 @@
-const AWS = require('aws-sdk');
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const ssm = new AWS.SSM();
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, DeleteCommand, GetCommand } = require('@aws-sdk/lib-dynamodb');
+const { SSMClient, GetParameterCommand } = require('@aws-sdk/client-ssm');
+
+const dynamoClient = new DynamoDBClient({});
+const dynamodb = DynamoDBDocumentClient.from(dynamoClient);
+const ssm = new SSMClient({});
 
 /**
  * Subscription Manager Lambda Function
@@ -108,10 +112,11 @@ async function handleVapidRequest(corsHeaders) {
       throw new Error('VAPID_PUBLIC_KEY_PARAM environment variable not set');
     }
 
-    const result = await ssm.getParameter({
+    const getParameterCommand = new GetParameterCommand({
       Name: paramName,
       WithDecryption: false
-    }).promise();
+    });
+    const result = await ssm.send(getParameterCommand);
 
     const publicKey = result.Parameter.Value;
     console.log('✅ VAPID public key retrieved successfully:', publicKey.substring(0, 20) + '...');
@@ -206,7 +211,8 @@ async function handleSubscription(body, corsHeaders) {
       hasKeys: !!subscription.keys
     });
 
-    await dynamodb.put(dbParams).promise();
+    const putCommand = new PutCommand(dbParams);
+    await dynamodb.send(putCommand);
 
     console.log('✅ Subscription stored successfully');
 
@@ -298,7 +304,8 @@ async function handleUnsubscription(body, corsHeaders) {
         }
       };
 
-      await dynamodb.delete(deleteParams).promise();
+      const deleteCommand = new DeleteCommand(deleteParams);
+      await dynamodb.send(deleteCommand);
       return item.subscription_id;
     });
 

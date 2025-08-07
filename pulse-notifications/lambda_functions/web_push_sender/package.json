@@ -6,7 +6,11 @@
   "scripts": {
     "zip": "zip -r ../web_push_sender.zip ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "@aws-sdk/client-ssm": "^3.0.0"
+  },
   "keywords": ["web-push", "notifications", "lambda"],
   "author": "Pulse Team",
   "license": "MIT"
