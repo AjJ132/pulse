@@ -2,7 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda
 import { newsHandler } from './handlers/newsHandler';
 import { scheduleHandler } from './handlers/scheduleHandler';
 import { notificationHandler } from './handlers/notificationHandler';
-import { deviceHandler } from './handlers/deviceHandler';
+import { parseRoute } from './utils/routeParser';
+import { PulseGenFunctionRoute } from './types/routes';
 
 export const handler = async (
   event: APIGatewayProxyEvent,
@@ -15,21 +16,23 @@ export const handler = async (
     const { httpMethod, path } = event;
     const pathSegments = path.split('/').filter(Boolean);
 
-    // Route to appropriate handler based on path
-    if (pathSegments[0] === 'news') {
-      return await newsHandler(event, context);
-    }
-
-    if (pathSegments[0] === 'schedule') {
-      return await scheduleHandler(event, context);
-    }
-
-    if (pathSegments[0] === 'notifications' || pathSegments[0] === 'send-notification') {
-      return await notificationHandler(event, context);
-    }
-
-    if (pathSegments[0] === 'devices' || pathSegments[0] === 'register-device') {
-      return await deviceHandler(event, context);
+    // Parse the route to determine the appropriate handler
+    const routeInfo = parseRoute(path);
+    
+    // Route to appropriate handler based on parsed route
+    switch (routeInfo.mainRoute) {
+      case PulseGenFunctionRoute.NEWS:
+        return await newsHandler(event, context);
+      
+      case PulseGenFunctionRoute.SCHEDULE:
+        return await scheduleHandler(event, context);
+      
+      case PulseGenFunctionRoute.NOTIFICATIONS:
+        return await notificationHandler(event, context, routeInfo.subRoute);
+      
+      default:
+        // This should not happen due to route validation, but handle gracefully
+        break;
     }
 
     // Default response for unknown routes

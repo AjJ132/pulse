@@ -12,22 +12,25 @@ This Lambda function provides various endpoints for the Pulse application, inclu
 - Manages schedule-related functionality
 - Provides schedule data for the Pulse application
 
-### Notification Handler (`/notifications` or `/send-notification`)
-- Sends push notifications to registered devices
-- Supports multiple targeting options:
-  - Direct device token (for testing)
-  - Specific device ID
-  - User ID (sends to all user's devices)
-  - All registered devices (for testing)
-
-### Device Handler (`/devices` or `/register-device`)
-- Registers devices for push notifications
-- Creates SNS platform endpoints
-- Stores device information in DynamoDB
+### Notification Handler (`/notifications`)
+- **Unified handler for all notification and device operations**
+- **Sub-routes:**
+  - `/notifications/send` - Send push notifications to devices
+  - `/notifications/register-device` - Register devices for push notifications
+  - `/notifications/list-devices` - List devices (by user or all)
+  - `/notifications/delete-device` - Delete a device registration
+- **Legacy route support:**
+  - `/devices` or `/register-device` → `/notifications/register-device`
+  - `/send-notification` → `/notifications/send`
+- **Features:**
+  - Multiple targeting options (user_id, device_id, direct token)
+  - Device management (register, list, delete)
+  - SNS platform endpoint creation
+  - DynamoDB storage for device tokens
 
 ## API Endpoints
 
-### POST /notifications
+### POST /notifications/send
 Send push notifications to devices.
 
 **Request Body:**
@@ -59,7 +62,7 @@ Send push notifications to devices.
 }
 ```
 
-### POST /devices
+### POST /notifications/register-device
 Register a device for push notifications.
 
 **Request Body:**
@@ -81,6 +84,48 @@ Register a device for push notifications.
   "endpoint_arn": "arn:aws:sns:..."
 }
 ```
+
+### GET /notifications/list-devices
+List devices (by user or all devices).
+
+**Query Parameters:**
+- `user_id` (optional): List devices for specific user
+
+**Response:**
+```json
+{
+  "message": "Devices retrieved successfully",
+  "total_devices": 2,
+  "devices": [
+    {
+      "device_id": "device123",
+      "user_id": "user123",
+      "platform": "ios",
+      "bundle_id": "com.example.app",
+      "created_at": "2025-08-23T17:27:19.968Z",
+      "active": true
+    }
+  ]
+}
+```
+
+### DELETE /notifications/delete-device
+Delete a device registration.
+
+**Query Parameters:**
+- `device_id`: ID of the device to delete
+
+**Response:**
+```json
+{
+  "message": "Device deleted successfully",
+  "device_id": "device123"
+}
+```
+
+### Legacy Routes (Still Supported)
+- `POST /devices` → `POST /notifications/register-device`
+- `POST /send-notification` → `POST /notifications/send`
 
 ## Infrastructure
 
@@ -133,7 +178,7 @@ You can test the endpoints using curl or any HTTP client:
 
 ```bash
 # Register a device
-curl -X POST https://your-api-gateway-url/devices \
+curl -X POST https://your-api-gateway-url/notifications/register-device \
   -H "Content-Type: application/json" \
   -d '{
     "device_token": "your_apns_token",
@@ -142,13 +187,24 @@ curl -X POST https://your-api-gateway-url/devices \
   }'
 
 # Send a notification
-curl -X POST https://your-api-gateway-url/notifications \
+curl -X POST https://your-api-gateway-url/notifications/send \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Test Notification",
     "message": "This is a test notification",
     "user_id": "test_user"
   }'
+
+# List devices for a user
+curl "https://your-api-gateway-url/notifications/list-devices?user_id=test_user"
+
+# Delete a device
+curl -X DELETE "https://your-api-gateway-url/notifications/delete-device?device_id=device123"
+
+# Legacy routes (still supported)
+curl -X POST https://your-api-gateway-url/devices \
+  -H "Content-Type: application/json" \
+  -d '{"device_token": "legacy_test", "user_id": "test_user"}'
 ```
 
 ## Local Development
