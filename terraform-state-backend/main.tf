@@ -18,13 +18,6 @@ resource "aws_s3_bucket" "terraform_state" {
 
   tags = {
     Project     = "pulse"
-    Environment = var.environment
-    Owner       = "pulse-team"
-    CostCenter  = "pulse-app"
-    ManagedBy   = "terraform"
-    Component   = "state-backend"
-    Version     = "v1.0.0"
-    Description = "S3 bucket for storing Terraform state files"
   }
 }
 
@@ -79,13 +72,6 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
   tags = {
     Project     = "pulse"
-    Environment = var.environment
-    Owner       = "pulse-team"
-    CostCenter  = "pulse-app"
-    ManagedBy   = "terraform"
-    Component   = "state-backend"
-    Version     = "v1.0.0"
-    Description = "DynamoDB table for Terraform state locking"
   }
 }
 

@@ -6,41 +6,78 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		255A76232E4667D80073237A /* AWSCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255A761E2E4667D80073237A /* AWSCore.xcframework */; };
+		255A76242E4667D80073237A /* AWSCore.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 255A761E2E4667D80073237A /* AWSCore.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		255A76252E4667D80073237A /* AWSSNS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255A761F2E4667D80073237A /* AWSSNS.xcframework */; };
+		255A76262E4667D80073237A /* AWSSNS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 255A761F2E4667D80073237A /* AWSSNS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		255A76272E4667D80073237A /* AWSCognitoIdentityProvider.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255A76202E4667D80073237A /* AWSCognitoIdentityProvider.xcframework */; };
+		255A76282E4667D80073237A /* AWSCognitoIdentityProvider.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 255A76202E4667D80073237A /* AWSCognitoIdentityProvider.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		255A76292E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255A76212E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework */; };
+		255A762A2E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 255A76212E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		255A762B2E4667D80073237A /* AWSCognitoAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255A76222E4667D80073237A /* AWSCognitoAuth.xcframework */; };
+		255A762C2E4667D80073237A /* AWSCognitoAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 255A76222E4667D80073237A /* AWSCognitoAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		255A75C22E46098A0073237A /* PBXContainerItemProxy */ = {
+		255A76002E46132A0073237A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 255A75AC2E4609880073237A /* Project object */;
+			containerPortal = 255A75EA2E4613280073237A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 255A75B32E4609880073237A;
+			remoteGlobalIDString = 255A75F12E4613280073237A;
 			remoteInfo = "pulse-mobile";
 		};
-		255A75CC2E46098A0073237A /* PBXContainerItemProxy */ = {
+		255A760A2E46132A0073237A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 255A75AC2E4609880073237A /* Project object */;
+			containerPortal = 255A75EA2E4613280073237A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 255A75B32E4609880073237A;
+			remoteGlobalIDString = 255A75F12E4613280073237A;
 			remoteInfo = "pulse-mobile";
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		255A762D2E4667D80073237A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				255A76262E4667D80073237A /* AWSSNS.xcframework in Embed Frameworks */,
+				255A762A2E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework in Embed Frameworks */,
+				255A762C2E4667D80073237A /* AWSCognitoAuth.xcframework in Embed Frameworks */,
+				255A76282E4667D80073237A /* AWSCognitoIdentityProvider.xcframework in Embed Frameworks */,
+				255A76242E4667D80073237A /* AWSCore.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		255A75B42E4609880073237A /* pulse-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pulse-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		255A75C12E46098A0073237A /* pulse-mobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pulse-mobileTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		255A75CB2E46098A0073237A /* pulse-mobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pulse-mobileUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		255A75F22E4613280073237A /* pulse-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pulse-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		255A75FF2E46132A0073237A /* pulse-mobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pulse-mobileTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		255A76092E46132A0073237A /* pulse-mobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pulse-mobileUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		255A761D2E46674D0073237A /* aws-ios-sdk-2.41.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "aws-ios-sdk-2.41.0.zip"; path = "../../../../Downloads/aws-ios-sdk-2.41.0.zip"; sourceTree = "<group>"; };
+		255A761E2E4667D80073237A /* AWSCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AWSCore.xcframework; path = "../../../../Downloads/aws-ios-sdk-2.41.0/frameworks/AWSCore.xcframework"; sourceTree = "<group>"; };
+		255A761F2E4667D80073237A /* AWSSNS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AWSSNS.xcframework; path = "../../../../Downloads/aws-ios-sdk-2.41.0/frameworks/AWSSNS.xcframework"; sourceTree = "<group>"; };
+		255A76202E4667D80073237A /* AWSCognitoIdentityProvider.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AWSCognitoIdentityProvider.xcframework; path = "../../../../Downloads/aws-ios-sdk-2.41.0/frameworks/AWSCognitoIdentityProvider.xcframework"; sourceTree = "<group>"; };
+		255A76212E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AWSCognitoIdentityProviderASF.xcframework; path = "../../../../Downloads/aws-ios-sdk-2.41.0/frameworks/AWSCognitoIdentityProviderASF.xcframework"; sourceTree = "<group>"; };
+		255A76222E4667D80073237A /* AWSCognitoAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AWSCognitoAuth.xcframework; path = "../../../../Downloads/aws-ios-sdk-2.41.0/frameworks/AWSCognitoAuth.xcframework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		255A75B62E4609880073237A /* pulse-mobile */ = {
+		255A75F42E4613280073237A /* pulse-mobile */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "pulse-mobile";
 			sourceTree = "<group>";
 		};
-		255A75C42E46098A0073237A /* pulse-mobileTests */ = {
+		255A76022E46132A0073237A /* pulse-mobileTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "pulse-mobileTests";
 			sourceTree = "<group>";
 		};
-		255A75CE2E46098A0073237A /* pulse-mobileUITests */ = {
+		255A760C2E46132A0073237A /* pulse-mobileUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "pulse-mobileUITests";
 			sourceTree = "<group>";
@@ -48,21 +85,26 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		255A75B12E4609880073237A /* Frameworks */ = {
+		255A75EF2E4613280073237A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				255A76252E4667D80073237A /* AWSSNS.xcframework in Frameworks */,
+				255A76292E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework in Frameworks */,
+				255A762B2E4667D80073237A /* AWSCognitoAuth.xcframework in Frameworks */,
+				255A76272E4667D80073237A /* AWSCognitoIdentityProvider.xcframework in Frameworks */,
+				255A76232E4667D80073237A /* AWSCore.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		255A75FC2E46132A0073237A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		255A75BE2E46098A0073237A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		255A75C82E46098A0073237A /* Frameworks */ = {
+		255A76062E46132A0073237A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,157 +114,172 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		255A75AB2E4609880073237A = {
+		255A75E92E4613280073237A = {
 			isa = PBXGroup;
 			children = (
-				255A75B62E4609880073237A /* pulse-mobile */,
-				255A75C42E46098A0073237A /* pulse-mobileTests */,
-				255A75CE2E46098A0073237A /* pulse-mobileUITests */,
-				255A75B52E4609880073237A /* Products */,
+				255A75F42E4613280073237A /* pulse-mobile */,
+				255A76022E46132A0073237A /* pulse-mobileTests */,
+				255A760C2E46132A0073237A /* pulse-mobileUITests */,
+				255A761C2E46674D0073237A /* Frameworks */,
+				255A75F32E4613280073237A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		255A75B52E4609880073237A /* Products */ = {
+		255A75F32E4613280073237A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				255A75B42E4609880073237A /* pulse-mobile.app */,
-				255A75C12E46098A0073237A /* pulse-mobileTests.xctest */,
-				255A75CB2E46098A0073237A /* pulse-mobileUITests.xctest */,
+				255A75F22E4613280073237A /* pulse-mobile.app */,
+				255A75FF2E46132A0073237A /* pulse-mobileTests.xctest */,
+				255A76092E46132A0073237A /* pulse-mobileUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		255A761C2E46674D0073237A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				255A76222E4667D80073237A /* AWSCognitoAuth.xcframework */,
+				255A76202E4667D80073237A /* AWSCognitoIdentityProvider.xcframework */,
+				255A76212E4667D80073237A /* AWSCognitoIdentityProviderASF.xcframework */,
+				255A761E2E4667D80073237A /* AWSCore.xcframework */,
+				255A761F2E4667D80073237A /* AWSSNS.xcframework */,
+				255A761D2E46674D0073237A /* aws-ios-sdk-2.41.0.zip */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		255A75B32E4609880073237A /* pulse-mobile */ = {
+		255A75F12E4613280073237A /* pulse-mobile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 255A75D52E46098A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobile" */;
+			buildConfigurationList = 255A76132E46132A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobile" */;
 			buildPhases = (
-				255A75B02E4609880073237A /* Sources */,
-				255A75B12E4609880073237A /* Frameworks */,
-				255A75B22E4609880073237A /* Resources */,
+				255A75EE2E4613280073237A /* Sources */,
+				255A75EF2E4613280073237A /* Frameworks */,
+				255A75F02E4613280073237A /* Resources */,
+				255A762D2E4667D80073237A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				255A75B62E4609880073237A /* pulse-mobile */,
+				255A75F42E4613280073237A /* pulse-mobile */,
 			);
 			name = "pulse-mobile";
 			packageProductDependencies = (
 			);
 			productName = "pulse-mobile";
-			productReference = 255A75B42E4609880073237A /* pulse-mobile.app */;
+			productReference = 255A75F22E4613280073237A /* pulse-mobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		255A75C02E46098A0073237A /* pulse-mobileTests */ = {
+		255A75FE2E46132A0073237A /* pulse-mobileTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 255A75D82E46098A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileTests" */;
+			buildConfigurationList = 255A76162E46132A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileTests" */;
 			buildPhases = (
-				255A75BD2E46098A0073237A /* Sources */,
-				255A75BE2E46098A0073237A /* Frameworks */,
-				255A75BF2E46098A0073237A /* Resources */,
+				255A75FB2E46132A0073237A /* Sources */,
+				255A75FC2E46132A0073237A /* Frameworks */,
+				255A75FD2E46132A0073237A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				255A75C32E46098A0073237A /* PBXTargetDependency */,
+				255A76012E46132A0073237A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				255A75C42E46098A0073237A /* pulse-mobileTests */,
+				255A76022E46132A0073237A /* pulse-mobileTests */,
 			);
 			name = "pulse-mobileTests";
 			packageProductDependencies = (
 			);
 			productName = "pulse-mobileTests";
-			productReference = 255A75C12E46098A0073237A /* pulse-mobileTests.xctest */;
+			productReference = 255A75FF2E46132A0073237A /* pulse-mobileTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		255A75CA2E46098A0073237A /* pulse-mobileUITests */ = {
+		255A76082E46132A0073237A /* pulse-mobileUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 255A75DB2E46098A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileUITests" */;
+			buildConfigurationList = 255A76192E46132A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileUITests" */;
 			buildPhases = (
-				255A75C72E46098A0073237A /* Sources */,
-				255A75C82E46098A0073237A /* Frameworks */,
-				255A75C92E46098A0073237A /* Resources */,
+				255A76052E46132A0073237A /* Sources */,
+				255A76062E46132A0073237A /* Frameworks */,
+				255A76072E46132A0073237A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				255A75CD2E46098A0073237A /* PBXTargetDependency */,
+				255A760B2E46132A0073237A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				255A75CE2E46098A0073237A /* pulse-mobileUITests */,
+				255A760C2E46132A0073237A /* pulse-mobileUITests */,
 			);
 			name = "pulse-mobileUITests";
 			packageProductDependencies = (
 			);
 			productName = "pulse-mobileUITests";
-			productReference = 255A75CB2E46098A0073237A /* pulse-mobileUITests.xctest */;
+			productReference = 255A76092E46132A0073237A /* pulse-mobileUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		255A75AC2E4609880073237A /* Project object */ = {
+		255A75EA2E4613280073237A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
-					255A75B32E4609880073237A = {
+					255A75F12E4613280073237A = {
 						CreatedOnToolsVersion = 16.3;
 					};
-					255A75C02E46098A0073237A = {
+					255A75FE2E46132A0073237A = {
 						CreatedOnToolsVersion = 16.3;
-						TestTargetID = 255A75B32E4609880073237A;
+						TestTargetID = 255A75F12E4613280073237A;
 					};
-					255A75CA2E46098A0073237A = {
+					255A76082E46132A0073237A = {
 						CreatedOnToolsVersion = 16.3;
-						TestTargetID = 255A75B32E4609880073237A;
+						TestTargetID = 255A75F12E4613280073237A;
 					};
 				};
 			};
-			buildConfigurationList = 255A75AF2E4609880073237A /* Build configuration list for PBXProject "pulse-mobile" */;
+			buildConfigurationList = 255A75ED2E4613280073237A /* Build configuration list for PBXProject "pulse-mobile" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 255A75AB2E4609880073237A;
+			mainGroup = 255A75E92E4613280073237A;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 255A75B52E4609880073237A /* Products */;
+			productRefGroup = 255A75F32E4613280073237A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				255A75B32E4609880073237A /* pulse-mobile */,
-				255A75C02E46098A0073237A /* pulse-mobileTests */,
-				255A75CA2E46098A0073237A /* pulse-mobileUITests */,
+				255A75F12E4613280073237A /* pulse-mobile */,
+				255A75FE2E46132A0073237A /* pulse-mobileTests */,
+				255A76082E46132A0073237A /* pulse-mobileUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		255A75B22E4609880073237A /* Resources */ = {
+		255A75F02E4613280073237A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		255A75BF2E46098A0073237A /* Resources */ = {
+		255A75FD2E46132A0073237A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		255A75C92E46098A0073237A /* Resources */ = {
+		255A76072E46132A0073237A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,21 +289,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		255A75B02E4609880073237A /* Sources */ = {
+		255A75EE2E4613280073237A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		255A75BD2E46098A0073237A /* Sources */ = {
+		255A75FB2E46132A0073237A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		255A75C72E46098A0073237A /* Sources */ = {
+		255A76052E46132A0073237A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,20 +313,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		255A75C32E46098A0073237A /* PBXTargetDependency */ = {
+		255A76012E46132A0073237A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 255A75B32E4609880073237A /* pulse-mobile */;
-			targetProxy = 255A75C22E46098A0073237A /* PBXContainerItemProxy */;
+			target = 255A75F12E4613280073237A /* pulse-mobile */;
+			targetProxy = 255A76002E46132A0073237A /* PBXContainerItemProxy */;
 		};
-		255A75CD2E46098A0073237A /* PBXTargetDependency */ = {
+		255A760B2E46132A0073237A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 255A75B32E4609880073237A /* pulse-mobile */;
-			targetProxy = 255A75CC2E46098A0073237A /* PBXContainerItemProxy */;
+			target = 255A75F12E4613280073237A /* pulse-mobile */;
+			targetProxy = 255A760A2E46132A0073237A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		255A75D32E46098A0073237A /* Debug */ = {
+		255A76112E46132A0073237A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -333,7 +390,7 @@
 			};
 			name = Debug;
 		};
-		255A75D42E46098A0073237A /* Release */ = {
+		255A76122E46132A0073237A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -390,11 +447,12 @@
 			};
 			name = Release;
 		};
-		255A75D62E46098A0073237A /* Debug */ = {
+		255A76142E46132A0073237A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "pulse-mobile/pulse-mobile.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L78Y96XMY7;
@@ -418,11 +476,12 @@
 			};
 			name = Debug;
 		};
-		255A75D72E46098A0073237A /* Release */ = {
+		255A76152E46132A0073237A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "pulse-mobile/pulse-mobile.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L78Y96XMY7;
@@ -446,7 +505,7 @@
 			};
 			name = Release;
 		};
-		255A75D92E46098A0073237A /* Debug */ = {
+		255A76172E46132A0073237A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -465,7 +524,7 @@
 			};
 			name = Debug;
 		};
-		255A75DA2E46098A0073237A /* Release */ = {
+		255A76182E46132A0073237A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -484,7 +543,7 @@
 			};
 			name = Release;
 		};
-		255A75DC2E46098A0073237A /* Debug */ = {
+		255A761A2E46132A0073237A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -501,7 +560,7 @@
 			};
 			name = Debug;
 		};
-		255A75DD2E46098A0073237A /* Release */ = {
+		255A761B2E46132A0073237A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -521,43 +580,43 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		255A75AF2E4609880073237A /* Build configuration list for PBXProject "pulse-mobile" */ = {
+		255A75ED2E4613280073237A /* Build configuration list for PBXProject "pulse-mobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				255A75D32E46098A0073237A /* Debug */,
-				255A75D42E46098A0073237A /* Release */,
+				255A76112E46132A0073237A /* Debug */,
+				255A76122E46132A0073237A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		255A75D52E46098A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobile" */ = {
+		255A76132E46132A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				255A75D62E46098A0073237A /* Debug */,
-				255A75D72E46098A0073237A /* Release */,
+				255A76142E46132A0073237A /* Debug */,
+				255A76152E46132A0073237A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		255A75D82E46098A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileTests" */ = {
+		255A76162E46132A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				255A75D92E46098A0073237A /* Debug */,
-				255A75DA2E46098A0073237A /* Release */,
+				255A76172E46132A0073237A /* Debug */,
+				255A76182E46132A0073237A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		255A75DB2E46098A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileUITests" */ = {
+		255A76192E46132A0073237A /* Build configuration list for PBXNativeTarget "pulse-mobileUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				255A75DC2E46098A0073237A /* Debug */,
-				255A75DD2E46098A0073237A /* Release */,
+				255A761A2E46132A0073237A /* Debug */,
+				255A761B2E46132A0073237A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 255A75AC2E4609880073237A /* Project object */;
+	rootObject = 255A75EA2E4613280073237A /* Project object */;
 }

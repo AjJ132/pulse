@@ -4,16 +4,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "environment" {
-  description = "Environment name (dev, staging, prod)"
-  type        = string
-  default     = "dev"
-  
-  validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "Environment must be one of: dev, staging, prod."
-  }
-}
 
 variable "state_bucket_name" {
   description = "Name of the S3 bucket for storing Terraform state files"
@@ -42,15 +32,3 @@ variable "project_name" {
   type        = string
   default     = "pulse"
 }
-
-variable "owner" {
-  description = "Owner of the resources"
-  type        = string
-  default     = "pulse-team"
-}
-
-variable "cost_center" {
-  description = "Cost center for billing purposes"
-  type        = string
-  default     = "pulse-app"
-} 
