@@ -16,6 +16,12 @@ variable "project_name" {
   default     = "pulse-news"
 }
 
+variable "project_sub_name" {
+  description = "Project sub-name for specific resource naming"
+  type        = string
+  default     = "pulse-gen-function"
+}
+
 variable "certificate_arn" {
   description = "ARN of the SSL certificate for the custom domain"
   type        = string
