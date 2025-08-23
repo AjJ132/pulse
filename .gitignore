@@ -164,3 +164,4 @@ pulse-mobile/terraform/*.tfstate.backup
 pulse-mobile/terraform/*.tfstate.*
 pulse-mobile/terraform/.terraform.tfstate.lock.info
 pulse-news/resources/terraform/lambda.zip
+pulse-gen-functions/resources/terraform/lambda.zip

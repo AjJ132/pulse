@@ -31,3 +31,15 @@ variable "route53_zone_id" {
   description = "Route 53 hosted zone ID for aj-johnson.com"
   type        = string
 }
+
+variable "apns_certificate_p12_base64" {
+  description = "Base64 encoded APNS certificate (.p12 file) for iOS push notifications"
+  type        = string
+  default     = ""
+}
+
+variable "apns_certificate_password" {
+  description = "Password for the APNS certificate"
+  type        = string
+  default     = ""
+}

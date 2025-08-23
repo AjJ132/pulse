@@ -1,6 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { newsHandler } from './handlers/newsHandler';
 import { scheduleHandler } from './handlers/scheduleHandler';
+import { notificationHandler } from './handlers/notificationHandler';
+import { deviceHandler } from './handlers/deviceHandler';
 
 export const handler = async (
   event: APIGatewayProxyEvent,
@@ -20,6 +22,14 @@ export const handler = async (
 
     if (pathSegments[0] === 'schedule') {
       return await scheduleHandler(event, context);
+    }
+
+    if (pathSegments[0] === 'notifications' || pathSegments[0] === 'send-notification') {
+      return await notificationHandler(event, context);
+    }
+
+    if (pathSegments[0] === 'devices' || pathSegments[0] === 'register-device') {
+      return await deviceHandler(event, context);
     }
 
     // Default response for unknown routes
