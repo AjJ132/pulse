@@ -134,16 +134,9 @@ resource "aws_iam_role_policy" "sns_feedback_policy" {
 }
 
 # SNS Platform Application for iOS (APNS)
-# Note: This will be created only if certificate credentials are provided
-resource "aws_sns_platform_application" "pulse_ios" {
-  count                        = var.apns_certificate_p12_base64 != "" ? 1 : 0
-  name                         = "pulse-ios-app"
-  platform                     = "APNS"
-  platform_credential         = var.apns_certificate_p12_base64
-  platform_principal          = var.apns_certificate_password
-  success_feedback_role_arn    = aws_iam_role.sns_feedback.arn
-  failure_feedback_role_arn    = aws_iam_role.sns_feedback.arn
-  success_feedback_sample_rate = "100"
+# Using existing platform application - not creating new one since it already exists
+locals {
+  sns_platform_application_arn = "arn:aws:sns:us-east-1:717279706981:app/APNS_SANDBOX/pulse-mobile"
 }
 
 # SNS Topic for notifications
@@ -192,7 +185,7 @@ resource "aws_lambda_function" "pulse_news_lambda" {
   environment {
     variables = {
       NODE_ENV = "production"
-      SNS_PLATFORM_APPLICATION_ARN = length(aws_sns_platform_application.pulse_ios) > 0 ? aws_sns_platform_application.pulse_ios[0].arn : ""
+      SNS_PLATFORM_APPLICATION_ARN = local.sns_platform_application_arn
       SNS_TOPIC_ARN               = aws_sns_topic.pulse_notifications.arn
       DYNAMODB_TABLE_NAME         = aws_dynamodb_table.device_tokens.name
     }

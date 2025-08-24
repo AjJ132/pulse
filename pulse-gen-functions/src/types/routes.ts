@@ -11,7 +11,8 @@ export enum PulseGenFunctionRoute {
   
   // Device routes
   DEVICES = 'devices',
-  REGISTER_DEVICE = 'register-device'
+  REGISTER_DEVICE = 'register-device',
+  LIST_DEVICES = 'list-devices'
 }
 
 export enum NotificationSubRoute {

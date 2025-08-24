@@ -30,7 +30,7 @@ output "sns_topic_arn" {
 
 output "sns_platform_application_arn" {
   description = "ARN of the SNS platform application for iOS"
-  value       = length(aws_sns_platform_application.pulse_ios) > 0 ? aws_sns_platform_application.pulse_ios[0].arn : ""
+  value       = local.sns_platform_application_arn
 }
 
 output "dynamodb_table_name" {

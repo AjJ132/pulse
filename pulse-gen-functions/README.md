@@ -169,8 +169,6 @@ To enable iOS push notifications, you need to provide an APNS certificate:
    base64 -i your_certificate.p12
    ```
 3. Set the Terraform variables:
-   - `apns_certificate_p12_base64`: The base64 encoded certificate
-   - `apns_certificate_password`: The password for the certificate
 
 ## Testing
 

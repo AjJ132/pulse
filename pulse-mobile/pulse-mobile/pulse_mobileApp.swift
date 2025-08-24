@@ -9,6 +9,11 @@ import SwiftUI
 import AWSSNS
 import UserNotifications
 
+extension Notification.Name {
+    static let deviceRegistrationSuccess = Notification.Name("deviceRegistrationSuccess")
+    static let deviceRegistrationFailed = Notification.Name("deviceRegistrationFailed")
+}
+
 
 
 @main
@@ -25,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     /// The SNS Platform application ARN
     let SNSPlatformApplicationArn = "arn:aws:sns:us-east-1:717279706981:app/APNS_SANDBOX/pulse-mobile"
+    
+    /// The backend API URL for device registration
+    let backendApiUrl = "https://orssnbg9nh.execute-api.us-east-1.amazonaws.com"
 
     var window: UIWindow?
 
@@ -52,11 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             token = token + String(format: "%02.2hhx", arguments: [deviceToken[i]])
         }
 
-        print(token)
-
+        print("Device Token: \(token)")
         UserDefaults.standard.set(token, forKey: "deviceTokenForSNS")
 
-        /// Create a platform endpoint. In this case,  the endpoint is a
+        /// Create a platform endpoint. In this case, the endpoint is a
         /// device endpoint ARN
         let sns = AWSSNS.default()
         let request = AWSSNSCreatePlatformEndpointInput()
@@ -64,22 +71,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         request?.platformApplicationArn = SNSPlatformApplicationArn
         sns.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
             if task.error != nil {
-                print("Error: \(String(describing: task.error))")
+                print("SNS Error: \(String(describing: task.error))")
             } else {
                 let createEndpointResponse = task.result! as AWSSNSCreateEndpointResponse
 
                 if let endpointArnForSNS = createEndpointResponse.endpointArn {
-                    print("endpointArn: \(endpointArnForSNS)")
+                    print("SNS endpointArn: \(endpointArnForSNS)")
                     UserDefaults.standard.set(endpointArnForSNS, forKey: "endpointArnForSNS")
                 }
             }
 
             return nil
         })
+        
+        /// Register device with backend API
+        registerDeviceWithBackend(deviceToken: token)
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print(error.localizedDescription)
+        print("Failed to register for remote notifications: \(error.localizedDescription)")
+    }
+    
+    /// Register device with backend API
+    private func registerDeviceWithBackend(deviceToken: String) {
+        let url = URL(string: "\(backendApiUrl)/notifications/register-device")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let deviceData: [String: Any] = [
+            "device_token": deviceToken,
+            "user_id": "ios_user_\(UUID().uuidString)",
+            "device_id": UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString,
+            "bundle_id": Bundle.main.bundleIdentifier ?? "com.alanjohnson.pulse-mobile",
+            "platform": "ios",
+            "timestamp": ISO8601DateFormatter().string(from: Date())
+        ]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: deviceData)
+        } catch {
+            print("Error creating JSON data: \(error)")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Backend registration error: \(error)")
+                NotificationCenter.default.post(name: .deviceRegistrationFailed, object: error.localizedDescription)
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Backend registration status: \(httpResponse.statusCode)")
+                
+                if let data = data, let responseString = String(data: data, encoding: .utf8) {
+                    print("Backend registration response: \(responseString)")
+                    
+                    if httpResponse.statusCode == 200 {
+                        NotificationCenter.default.post(name: .deviceRegistrationSuccess, object: responseString)
+                    } else {
+                        NotificationCenter.default.post(name: .deviceRegistrationFailed, object: "HTTP \(httpResponse.statusCode): \(responseString)")
+                    }
+                }
+            }
+        }.resume()
     }
 
     func registerForPushNotifications(application: UIApplication) {

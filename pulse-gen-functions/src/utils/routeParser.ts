@@ -48,6 +48,15 @@ export function parseRoute(path: string): RouteInfo {
     };
   }
   
+  // Handle list-devices route specifically
+  if (mainRoute === PulseGenFunctionRoute.LIST_DEVICES) {
+    return {
+      mainRoute: PulseGenFunctionRoute.NOTIFICATIONS,
+      subRoute: NotificationSubRoute.LIST_DEVICES,
+      pathSegments
+    };
+  }
+  
   // For other routes (news, schedule), no sub-route needed
   return {
     mainRoute,
