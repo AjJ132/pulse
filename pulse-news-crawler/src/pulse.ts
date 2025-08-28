@@ -2,7 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda
 
 import { PulseGenFunctionRoute } from './types/routes';
 import { parseRoute } from './utils/routeParser';
-import { newsHandler } from './handlers/NewsHandler';
+import { dailyNewsHandler } from './handlers/DailyNewsHandler';
+
 
 
 export const handler = async (
@@ -19,7 +20,7 @@ export const handler = async (
     // Route to appropriate handler based on parsed route
     switch (routeInfo.mainRoute) {
       case PulseGenFunctionRoute.NEWS:
-        return await newsHandler(event, context);
+        return await dailyNewsHandler(event, context);
 
       default:
         // This should not happen due to route validation, but handle gracefully
