@@ -173,7 +173,7 @@ resource "aws_dynamodb_table" "pulse_cache" {
 
 # DynamoDB table for news articles
 resource "aws_dynamodb_table" "pulse_news_articles" {
-  name           = "${var.project_name}-news-articles-${var.environment}"
+  name           = "${var.project_name}-news-articles"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "article_id"
   range_key      = "published_date"
@@ -237,7 +237,7 @@ resource "aws_dynamodb_table" "pulse_news_articles" {
   }
 
   tags = {
-    Name        = "${var.project_name}-news-articles-${var.environment}"
+    Name        = "${var.project_name}-news-articles"
     Project     = var.project_name
     Environment = var.environment
     Component   = "database"
@@ -247,7 +247,7 @@ resource "aws_dynamodb_table" "pulse_news_articles" {
 
 # DynamoDB table for news sentiment analysis
 resource "aws_dynamodb_table" "pulse_news_sentiment" {
-  name           = "${var.project_name}-news-sentiment-${var.environment}"
+  name           = "${var.project_name}-news-sentiment"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "article_id"
   range_key      = "analysis_timestamp"
@@ -312,7 +312,7 @@ resource "aws_dynamodb_table" "pulse_news_sentiment" {
   }
 
   tags = {
-    Name        = "${var.project_name}-news-sentiment-${var.environment}"
+    Name        = "${var.project_name}-news-sentiment"
     Project     = var.project_name
     Environment = var.environment
     Component   = "database"
