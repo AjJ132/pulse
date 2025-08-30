@@ -1,0 +1,26 @@
+{
+    "article_id": "50ca02dd-7f9c-4795-aa01-210146a1f145",
+    "title": "New CRISPR Gene Editing Breakthrough Shows Promise for Cancer Treatment",
+    "url": "https://example.com/science/crispr-cancer-breakthrough",
+    "source": "Nature Science Journal",
+    "category": "science",
+    "subcategory": "biotechnology",
+    "rating": 5,
+    "rated_at": "2024-08-29T10:00:00Z",
+    "keywords": [
+        "CRISPR",
+        "gene editing",
+        "cancer",
+        "biotechnology"
+    ],
+    "summary": "Researchers demonstrate new precision in CRISPR technology",
+    "embedding": "base64_encoded_embedding_vector_here",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "semantic_keywords": [
+        "gene_therapy",
+        "medical_research",
+        "biotechnology",
+        "cancer_treatment"
+    ],
+    "created_at": "2024-08-29T09:30:00Z"
+}

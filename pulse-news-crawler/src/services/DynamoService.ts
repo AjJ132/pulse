@@ -1,15 +1,20 @@
 import {
   DynamoDBClient,
+  ScanCommand,
 } from '@aws-sdk/client-dynamodb';
 
 export interface DynamoServiceConfig {
   region?: string;
-  accessKeyId?: string;
-  secretAccessKey?: string;
 }
 
+export interface DynamoScanParams {
+  TableName: string;
+  Limit?: number;
+  FilterExpression?: string;
+  ExpressionAttributeValues?: { [key: string]: any };
+}
 
-export class DynamoService {
+export class DynamoDBService {
   private client: DynamoDBClient;
 
   constructor(config: DynamoServiceConfig) {
@@ -17,15 +22,18 @@ export class DynamoService {
       region: config.region || process.env.AWS_REGION || 'us-east-1',
     };
 
-    // Only add credentials if provided (useful for local development)
-    if (config.accessKeyId && config.secretAccessKey) {
-      clientConfig.credentials = {
-        accessKeyId: config.accessKeyId,
-        secretAccessKey: config.secretAccessKey,
-      };
-    }
-
     this.client = new DynamoDBClient(clientConfig);
+  }
+
+  public async scan(params: DynamoScanParams): Promise<any> {
+    try {
+      const scanCommand = new ScanCommand(params);
+      const result = await this.client.send(scanCommand);
+      return result;
+    } catch (error) {
+      console.error('Error scanning DynamoDB:', error);
+      throw new Error('Error scanning DynamoDB');
+    }
   }
 
 

@@ -1,5 +1,9 @@
 import express from 'express';
+import { config } from 'dotenv';
 import { handler } from '../src/pulse';
+
+// Load environment variables from .env file
+config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
